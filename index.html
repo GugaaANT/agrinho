@@ -3,23 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agro Forte: Futuro Sustentável</title>
+    <title>Agro Sustentável | Futuro & Tecnologia</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Fontes do Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Header / Navegação -->
-    <header>
+    <header id="header">
         <nav class="container">
             <div class="logo">Agro<span>Sustentável</span></div>
             <ul class="nav-links">
                 <li><a href="#home">Início</a></li>
                 <li><a href="#curiosidades">Curiosidades</a></li>
-                <li><a href="#chatbot">Chatbot</a></li>
+                <li><a href="#chatbot">Assistente</a></li>
             </ul>
             <div class="menu-toggle" id="mobile-menu">
                 <span class="bar"></span>
@@ -29,62 +27,63 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="container hero-content">
             <h1>O Futuro do Campo é Sustentável</h1>
             <p>Descubra como a tecnologia e a preservação ambiental estão transformando o agronegócio brasileiro para as novas gerações.</p>
-            <a href="#chatbot" class="btn-primary">Falar com o Assistente</a>
+            <div class="hero-btns">
+                <a href="#chatbot" class="btn-primary">Falar com Assistente</a>
+            </div>
         </div>
     </section>
 
-    <!-- Seção de Curiosidades -->
-    <section id="curiosidades" class="curiosidades section-padding">
+    <section id="curiosidades" class="curiosidades">
         <div class="container">
-            <h2 class="section-title">Você sabia?</h2>
+            <h2 class="section-title reveal">Inovações que Mudam o Mundo</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <div class="card-icon">🌱</div>
+                <div class="card reveal">
+                    <span class="card-icon">🌱</span>
                     <h3>Agro Digital</h3>
-                    <p>Drones e sensores ajudam a economizar até 30% de água e fertilizantes nas plantações modernas.</p>
+                    <p>Drones e inteligência artificial ajudam a economizar até 30% de água e fertilizantes, protegendo o solo.</p>
                 </div>
-                <div class="card">
-                    <div class="card-icon">🚜</div>
-                    <h3>Brasil no Topo</h3>
-                    <p>O Brasil é um dos maiores produtores de alimentos do mundo, alimentando mais de 1 bilhão de pessoas.</p>
+                <div class="card reveal" style="transition-delay: 0.2s;">
+                    <span class="card-icon">🚜</span>
+                    <h3>Brasil Potência</h3>
+                    <p>O agronegócio brasileiro alimenta mais de 1 bilhão de pessoas ao redor do globo com alta qualidade.</p>
                 </div>
-                <div class="card">
-                    <div class="card-icon">☀️</div>
-                    <h3>Energia Limpa</h3>
-                    <p>Muitas fazendas já utilizam energia solar e biomassa para serem 100% autossuficientes em energia.</p>
+                <div class="card reveal" style="transition-delay: 0.4s;">
+                    <span class="card-icon">☀️</span>
+                    <h3>Energia Renovável</h3>
+                    <p>Fazendas modernas produzem sua própria energia através do sol e resíduos orgânicos (biomassa).</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Seção do Chatbot -->
-    <section id="chatbot" class="chatbot-section section-padding">
+    <section id="chatbot" class="chatbot-section">
         <div class="container">
-            <h2 class="section-title">Assistente Agro Estudantil</h2>
-            <p class="section-subtitle">Tire suas dúvidas rapidamente com nosso chatbot especializado.</p>
+            <div class="reveal">
+                <h2 class="section-title">AgroBot Assistente</h2>
+                <p style="text-align: center; margin-bottom: 50px; font-weight: 600; color: #666;">
+                    Explore o mundo do agro através de uma conversa inteligente.
+                </p>
+            </div>
             
-            <div class="chat-container">
+            <div class="chat-container reveal">
                 <div class="chat-window" id="chat-window">
-                    <div class="message bot-message">
-                        Olá, estudante! Sou o AgroBot. Como posso te ajudar hoje? Escolha uma das perguntas abaixo ou clique nelas.
-                    </div>
+                    <!-- Mensagens via JS -->
                 </div>
                 <div class="chat-options" id="chat-options">
-                    <!-- Opções serão inseridas via JS -->
+                    <!-- Opções via JS -->
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
+    <footer style="background: #081c15; color: white; padding: 60px 0; text-align: center;">
         <div class="container">
-            <p>&copy; 2026 Agro Forte & Futuro Sustentável. Criado para fins educativos.</p>
+            <div class="logo" style="margin-bottom: 20px; color: white;">Agro<span style="color: #2dc653;">Sustentável</span></div>
+            <p style="opacity: 0.6; font-size: 0.9rem;">&copy; 2026 Agro Forte & Futuro Sustentável. Tecnologia a serviço da vida.</p>
         </div>
     </footer>
 
