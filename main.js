@@ -1,157 +1,95 @@
-/* ============================================================
-   AGRINHO 2026 – main.js
-   Interações, animações e comportamentos do site
-   ============================================================ */
+/**
+ * Script do Site Agro Sustentável
+ * Gerencia o Chatbot e interações básicas
+ */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. Dados do Chatbot (Perguntas e Respostas)
+    const chatData = [
+        {
+            question: "O que é agricultura sustentável?",
+            answer: "A agricultura sustentável é um modelo que busca produzir alimentos sem esgotar os recursos naturais, preservando a biodiversidade, o solo e a água para as gerações futuras."
+        },
+        {
+            question: "Como a tecnologia ajuda no campo?",
+            answer: "A tecnologia, como drones, GPS e sensores de solo, permite o uso preciso de insumos, reduzindo desperdícios e aumentando a produtividade de forma ecológica."
+        },
+        {
+            question: "O que são defensivos biológicos?",
+            answer: "São produtos feitos a partir de organismos vivos (como fungos ou bactérias do bem) para combater pragas, sendo muito menos agressivos ao meio ambiente que os químicos tradicionais."
+        },
+        {
+            question: "Qual a importância do Agro para o Brasil?",
+            answer: "O agronegócio é um dos principais motores da economia brasileira, gerando milhões de empregos e garantindo a segurança alimentar do país e do mundo."
+        }
+    ];
 
-  /* ---------- NAVBAR SCROLL ---------- */
-  const navbar = document.getElementById("navbar");
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-      navbar.classList.add("scrolled");
-    } else {
-      navbar.classList.remove("scrolled");
+    // 2. Elementos do Chatbot
+    const chatWindow = document.getElementById('chat-window');
+    const chatOptions = document.getElementById('chat-options');
+
+    // Função para adicionar mensagem ao chat
+    function addMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message');
+        messageDiv.classList.add(sender === 'bot' ? 'bot-message' : 'user-message');
+        messageDiv.textContent = text;
+        chatWindow.appendChild(messageDiv);
+        
+        // Rolar para o final
+        chatWindow.scrollTop = chatWindow.scrollHeight;
     }
-  });
 
-  /* ---------- HAMBURGER MENU ---------- */
-  const hamburger = document.getElementById("hamburger");
-  const navLinks = document.getElementById("navLinks");
-
-  hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("open");
-    hamburger.classList.toggle("active");
-  });
-
-  // Fecha o menu ao clicar em um link
-  navLinks.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      navLinks.classList.remove("open");
-      hamburger.classList.remove("active");
-    });
-  });
-
-  // Fecha o menu ao clicar fora
-  document.addEventListener("click", (e) => {
-    if (!navbar.contains(e.target)) {
-      navLinks.classList.remove("open");
-      hamburger.classList.remove("active");
+    // Função para processar a escolha do usuário
+    function handleChoice(item) {
+        // Adiciona a pergunta do usuário
+        addMessage(item.question, 'user');
+        
+        // Pequeno delay para simular o bot "pensando"
+        setTimeout(() => {
+            addMessage(item.answer, 'bot');
+        }, 600);
     }
-  });
 
-  /* ---------- ACTIVE NAV LINK ---------- */
-  const sections = document.querySelectorAll("section[id]");
-  const navItems = document.querySelectorAll(".nav-links a");
-
-  const observerOptions = {
-    root: null,
-    rootMargin: "-40% 0px -40% 0px",
-    threshold: 0
-  };
-
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navItems.forEach(item => {
-          item.classList.remove("active-link");
-          if (item.getAttribute("href") === `#${entry.target.id}`) {
-            item.classList.add("active-link");
-          }
+    // Inicializar opções do chat
+    function initChat() {
+        chatData.forEach(item => {
+            const btn = document.createElement('button');
+            btn.classList.add('option-btn');
+            btn.textContent = item.question;
+            btn.addEventListener('click', () => handleChoice(item));
+            chatOptions.appendChild(btn);
         });
-      }
+    }
+
+    // 3. Menu Mobile (Simples)
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (mobileMenu) {
+        mobileMenu.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '70px';
+            navLinks.style.left = '0';
+            navLinks.style.width = '100%';
+            navLinks.style.backgroundColor = 'white';
+            navLinks.style.padding = '20px';
+        });
+    }
+
+    // Inicialização
+    initChat();
+
+    // Efeito de scroll suave para links internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
     });
-  }, observerOptions);
-
-  sections.forEach(section => sectionObserver.observe(section));
-
-  /* ---------- SCROLL REVEAL ---------- */
-  const revealElements = document.querySelectorAll(
-    ".card, .pilar, .fact-card, .section-header, .chat-window"
-  );
-
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("revealed");
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  revealElements.forEach((el, index) => {
-    el.style.opacity = "0";
-    el.style.transform = "translateY(30px)";
-    el.style.transition = `opacity 0.6s ease ${index * 0.07}s, transform 0.6s ease ${index * 0.07}s`;
-    revealObserver.observe(el);
-  });
-
-  // Adiciona a classe que ativa a animação
-  const style = document.createElement("style");
-  style.textContent = `
-    .revealed {
-      opacity: 1 !important;
-      transform: translateY(0) !important;
-    }
-    .nav-links a.active-link {
-      background: var(--green-pale);
-      color: var(--green-dark);
-      font-weight: 600;
-    }
-    .hamburger.active span:nth-child(1) {
-      transform: translateY(8px) rotate(45deg);
-    }
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-    .hamburger.active span:nth-child(3) {
-      transform: translateY(-8px) rotate(-45deg);
-    }
-  `;
-  document.head.appendChild(style);
-
-  /* ---------- SMOOTH SCROLL OFFSET (navbar fixa) ---------- */
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
-      if (target) {
-        const offset = 80;
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: "smooth" });
-      }
-    });
-  });
-
-  /* ---------- CONTADOR ANIMADO (hero stats) ---------- */
-  // Pode ser expandido futuramente
-
-  /* ---------- FAB TOOLTIP ---------- */
-  const fab = document.getElementById("chatFab");
-  let fabTooltipShown = false;
-
-  setTimeout(() => {
-    if (!fabTooltipShown) {
-      fab.style.animation = "pulse 1s ease 3";
-      fabTooltipShown = true;
-    }
-  }, 3000);
-
-  const pulseStyle = document.createElement("style");
-  pulseStyle.textContent = `
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08) translateY(-4px); }
-    }
-  `;
-  document.head.appendChild(pulseStyle);
-
-  /* ---------- YEAR FOOTER ---------- */
-  const yearEl = document.querySelector(".footer-bottom p");
-  if (yearEl) {
-    const year = new Date().getFullYear();
-    yearEl.textContent = `© ${year} Agrinho – Sistema FAEP/SENAR-PR. Projeto educacional.`;
-  }
-
-  console.log("🌱 Agrinho 2026 – Site carregado com sucesso!");
 });
